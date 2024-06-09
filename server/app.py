@@ -49,9 +49,9 @@ class PlantByID(Resource):
     
     def patch(self, id):
         plant = Plant.query.filter(Plant.id == id).first()
-        for attr in request.form:
-            setattr(plant, attr, request.form[attr])
-        plant.is_in_stock = False
+        data = request.get_json()
+        for attr in data:
+            setattr(plant, attr, data[attr])
 
         db.session.add(plant)
         db.session.commit()
